@@ -2,13 +2,7 @@
   width: 100%;
   height: 40px;
   background-color: #d2fcd0;
-}
-
-.column-full {
-  width: 100%;
-  display: flex;
-  justify-content: end;
-  align-items: center;
+  margin: 0 auto;
 }
 
 #favories-button {
@@ -20,12 +14,6 @@
   margin-right: 10px;
 }
 
-.column {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
 #header-h2 {
   font-size: medium;
 }
@@ -35,12 +23,48 @@
 }
 
 .region-button {
+  width: 100%;
   background: none;
   border: none;
+  text-align: center;
+  font-size: 8px;
+  padding-top: 15px;
+}
+
+form {
+  padding-top: 10px;
+  padding-right: 15px;
+}
+
+.pokemon-image-row {
+  padding-top: 10px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .container-main {
   width: 100%;
   margin: 0 auto;
   background-color: #c093a9;
+  height: 100%;
+}
+
+.pokemon-card {
+  width: 100%;
+  background-color: aliceblue;
+}
+
+.pokemon-image {
+  padding: 10px;
+  width: 100%;
+}
+
+.pokemon-description {
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: rgb(196, 209, 204);
 }
