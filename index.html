@@ -28,9 +28,12 @@
         <div class="green-header">
           <div class="row region-row">
             <div class="column-nine">
-              <button type="button" class="region-button" id="kanto-button">
-                KANTO
-              </button>
+              <a href="#main-form" class="region-button" id="all-button">ALL</a>
+            </div>
+            <div class="column-nine">
+              <a href="#kanto-form" class="region-button" id="kanto-button"
+                >KANTO</a
+              >
             </div>
             <div class="column-nine">
               <button type="button" class="region-button" id="johto-button">
@@ -77,47 +80,49 @@
       </div>
     </header>
     <main>
-      <div class="container-main">
-        <div class="row">
-          <div class="column-full">
-            <form>
-              <select id="change-type" class="type-of-pokemon">
-                <option value="" disabled selected hidden>Choose Type</option>
-                <option>Normal</option>
-                <option>Fighting</option>
-                <option>Flying</option>
-                <option>Poison</option>
-                <option>Ground</option>
-                <option>Rock</option>
-                <option>Bug</option>
-                <option>Ghost</option>
-                <option>Steel</option>
-                <option>Fire</option>
-                <option>Water</option>
-                <option>Grass</option>
-                <option>Electric</option>
-                <option>Psychic</option>
-                <option>Ice</option>
-                <option>Dragon</option>
-                <option>Dark</option>
-                <option>Fairy</option>
-                <option>Stellar</option>
-                <option>Unknown</option>
-              </select>
-            </form>
-          </div>
-        </div>
-        <div class="pokemon-image-row row">
-          <div class="column-half">
-            <div class="pokemon-card">
-              <img class="pokemon-image" src="images/downloads/0144.png" />
-              <p class="pokemon-description">Articuno #0144</p>
+      <div data-view="main-form" id="main-form">
+        <div class="container-main">
+          <div class="row">
+            <div class="column-full">
+              <form>
+                <select id="change-type" class="type-of-pokemon">
+                  <option value="" disabled selected hidden>Choose Type</option>
+                  <option>Normal</option>
+                  <option>Fighting</option>
+                  <option>Flying</option>
+                  <option>Poison</option>
+                  <option>Ground</option>
+                  <option>Rock</option>
+                  <option>Bug</option>
+                  <option>Ghost</option>
+                  <option>Steel</option>
+                  <option>Fire</option>
+                  <option>Water</option>
+                  <option>Grass</option>
+                  <option>Electric</option>
+                  <option>Psychic</option>
+                  <option>Ice</option>
+                  <option>Dragon</option>
+                  <option>Dark</option>
+                  <option>Fairy</option>
+                  <option>Stellar</option>
+                  <option>Unknown</option>
+                </select>
+              </form>
             </div>
           </div>
-          <div class="column-half">
-            <div class="pokemon-card">
-              <img class="pokemon-image" src="images/downloads/0144.png" />
-              <p class="pokemon-description">Articuno #0144</p>
+          <div class="pokemon-image-row row">
+            <div class="column-half">
+              <div class="pokemon-card">
+                <img class="pokemon-image" src="images/downloads/0144.png" />
+                <p class="pokemon-description">Articuno #0144</p>
+              </div>
+            </div>
+            <div class="column-half">
+              <div class="pokemon-card">
+                <img class="pokemon-image" src="images/downloads/0144.png" />
+                <p class="pokemon-description">Articuno #0144</p>
+              </div>
             </div>
           </div>
         </div>
