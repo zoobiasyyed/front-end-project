@@ -38,3 +38,9 @@
   background: none;
   border: none;
 }
+
+.container-main {
+  width: 100%;
+  margin: 0 auto;
+  background-color: #c093a9;
+}
