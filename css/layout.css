@@ -22,6 +22,8 @@ header {
 .column-nine {
   margin: 0 auto;
   width: calc(100% / 10);
+  display: flex;
+  justify-content: center;
 }
 
 .column-full {
@@ -40,4 +42,28 @@ header {
   display: flex;
   justify-content: center;
   width: 100%;
+}
+
+@media screen and (width >= 585px) {
+  .column-half {
+    width: calc(100% / 3);
+  }
+}
+
+@media screen and (width >= 850px) {
+  .column-half {
+    width: calc(100% / 4);
+  }
+}
+
+@media screen and (width >= 1150px) {
+  .column-half {
+    width: calc(100% / 5);
+  }
+}
+
+@media screen and (width >= 1300px) {
+  .column-half {
+    width: calc(100% / 6);
+  }
 }

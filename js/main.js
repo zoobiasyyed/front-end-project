@@ -11,7 +11,7 @@ async function fetchLegendaryPokemon() {
             throw new Error(`Error fetching Pokémon species: ${response.status}`);
         }
         const data = await response.json();
-        console.log('something');
+        console.log('data', data.results);
         for (let i = 0; i < data.results.length; i++) {
             const id = i + 1;
             let formatedId = null;
@@ -28,7 +28,6 @@ async function fetchLegendaryPokemon() {
                 formatedId = id;
             }
             const renderData = renderPokemon(data.results[i], formatedId);
-            console.log('renderData', renderData);
             $pokemonRow?.appendChild(renderData);
         }
         console.log(data);

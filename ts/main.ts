@@ -12,13 +12,6 @@ interface PokemonType {
   };
 }
 
-interface PokemonDetails {
-  name: string;
-  is_legendary: boolean;
-  is_mythical: boolean;
-  types: PokemonType[];
-}
-
 interface Pokemoncard {
   imageUrl: string;
   name: string;
@@ -39,10 +32,12 @@ async function fetchLegendaryPokemon(): Promise<void> {
     }
 
     const data = await response.json();
-    console.log('something');
+
+    console.log('data', data.results);
+
     for (let i = 0; i < data.results.length; i++) {
       const id = i + 1;
-      let formatedId = null;
+      let formatedId: any = null;
 
       if (id < 10) {
         formatedId = '000' + id;
@@ -53,8 +48,8 @@ async function fetchLegendaryPokemon(): Promise<void> {
       } else {
         formatedId = id;
       }
+
       const renderData = renderPokemon(data.results[i], formatedId);
-      console.log('renderData', renderData);
       $pokemonRow?.appendChild(renderData);
     }
 
@@ -79,6 +74,7 @@ function renderPokemon(pokemon: Pokemoncard, id: string): HTMLElement {
 
   const $pForPokemonCard = document.createElement('p');
   $pForPokemonCard.setAttribute('class', 'pokemon-description');
+
   $pForPokemonCard.textContent = `${pokemon.name} #${id}`;
 
   $pokemonCard.appendChild($pokemonImage);
