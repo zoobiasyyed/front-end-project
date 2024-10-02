@@ -21,7 +21,7 @@ header {
 
 .column-nine {
   margin: 0 auto;
-  width: calc(100% / 8);
+  width: calc(100% / 10);
 }
 
 .column-full {
