@@ -19,6 +19,24 @@ interface Pokemoncard {
 
 // querying for pokemon row
 const $pokemonRow = document.querySelector('.pokemon-image-row');
+// querying for changing the type
+const $changeType = document.querySelector('#change-type') as HTMLSelectElement;
+
+async function fetchPokemonType(): Promise<void> {
+  try {
+    const responseType = await fetch('https://pokeapi.co/api/v2/pokemon/');
+
+    if (!responseType.ok) {
+      throw new Error(`Error fetching Pokémon species: ${responseType.status}`);
+    }
+
+    const type = await responseType.json();
+
+    console.log('type', type.results);
+  } catch (error) {
+    console.error('Error fetching Pokémon types:', error);
+  }
+}
 
 async function fetchLegendaryPokemon(): Promise<void> {
   try {
@@ -31,6 +49,7 @@ async function fetchLegendaryPokemon(): Promise<void> {
       throw new Error(`Error fetching Pokémon species: ${response.status}`);
     }
 
+    // for response
     const data = await response.json();
 
     console.log('data', data.results);

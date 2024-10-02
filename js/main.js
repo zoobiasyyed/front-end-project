@@ -3,6 +3,21 @@
 // interface for Pokemon Species
 // querying for pokemon row
 const $pokemonRow = document.querySelector('.pokemon-image-row');
+// querying for changing the type
+const $changeType = document.querySelector('#change-type');
+async function fetchPokemonType() {
+    try {
+        const responseType = await fetch('https://pokeapi.co/api/v2/pokemon/');
+        if (!responseType.ok) {
+            throw new Error(`Error fetching Pokémon species: ${responseType.status}`);
+        }
+        const type = await responseType.json();
+        console.log('type', type.results);
+    }
+    catch (error) {
+        console.error('Error fetching Pokémon types:', error);
+    }
+}
 async function fetchLegendaryPokemon() {
     try {
         // Fetch all Pokémon species data (using a large limit)
@@ -10,6 +25,7 @@ async function fetchLegendaryPokemon() {
         if (!response.ok) {
             throw new Error(`Error fetching Pokémon species: ${response.status}`);
         }
+        // for response
         const data = await response.json();
         console.log('data', data.results);
         for (let i = 0; i < data.results.length; i++) {
