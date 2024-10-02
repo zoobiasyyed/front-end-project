@@ -75,7 +75,9 @@ function renderPokemon(pokemon: Pokemoncard, id: string): HTMLElement {
   const $pForPokemonCard = document.createElement('p');
   $pForPokemonCard.setAttribute('class', 'pokemon-description');
 
-  $pForPokemonCard.textContent = `${pokemon.name} #${id}`;
+  const capitilizedName =
+    pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
+  $pForPokemonCard.textContent = `${capitilizedName} #${id}`;
 
   $pokemonCard.appendChild($pokemonImage);
   $pokemonCard.appendChild($pForPokemonCard);
