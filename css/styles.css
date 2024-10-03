@@ -79,3 +79,7 @@ form {
   padding-bottom: 10px;
   background-color: rgb(196, 209, 204);
 }
+
+.hidden {
+  display: none !important;
+}

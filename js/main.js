@@ -1,23 +1,21 @@
 "use strict";
 // fetch from pokemon API
 // interface for Pokemon Species
+// creating object of regions
+const regionsObj = {
+    kanto: 'https://pokeapi.co/api/v2/pokedex/2',
+    johto: 'https://pokeapi.co/api/v2/pokedex/3',
+    hoenn: 'https://pokeapi.co/api/v2/pokedex/4',
+    sinnoh: 'https://pokeapi.co/api/v2/pokedex/5',
+    unova: 'https://pokeapi.co/api/v2/pokedex/8',
+    kalos: 'https://pokeapi.co/api/v2/pokedex/12',
+    alola: 'https://pokeapi.co/api/v2/pokedex/16',
+    galar: 'https://pokeapi.co/api/v2/pokedex/27',
+    paldea: 'https://pokeapi.co/api/v2/pokedex/31',
+};
 // querying for pokemon row
 const $pokemonRow = document.querySelector('.pokemon-image-row');
-// querying for changing the type
-const $changeType = document.querySelector('#change-type');
-async function fetchPokemonType() {
-    try {
-        const responseType = await fetch('https://pokeapi.co/api/v2/pokemon/');
-        if (!responseType.ok) {
-            throw new Error(`Error fetching Pokémon species: ${responseType.status}`);
-        }
-        const type = await responseType.json();
-        console.log('type', type.results);
-    }
-    catch (error) {
-        console.error('Error fetching Pokémon types:', error);
-    }
-}
+// FETCHING ALL POKEMON CONTENT
 async function fetchLegendaryPokemon() {
     try {
         // Fetch all Pokémon species data (using a large limit)
@@ -53,6 +51,7 @@ async function fetchLegendaryPokemon() {
     }
 }
 fetchLegendaryPokemon();
+// RENDERING POKEMON CONTENT
 function renderPokemon(pokemon, id) {
     const $pokemonColumn = document.createElement('div');
     $pokemonColumn.setAttribute('class', 'column-half');
@@ -70,3 +69,50 @@ function renderPokemon(pokemon, id) {
     $pokemonColumn.appendChild($pokemonCard);
     return $pokemonColumn;
 }
+// FETCHING REGION CONTENT
+async function fetchRegionOfPokemon() {
+    try {
+        const fetchRegion = await fetch('https://pokeapi.co/api/v2/pokedex/4');
+        if (!fetchRegion.ok) {
+            throw new Error(`Error fetching Pokémon species: ${fetchRegion.status}`);
+        }
+        // for response
+        const regionData = await fetchRegion.json();
+        console.log('regionData', regionData);
+    }
+    catch (error) {
+        console.error('Error fetching legendary Pokémon:', error);
+    }
+}
+fetchRegionOfPokemon();
+// create event listener for the regions tab, event bubbling
+const $Allpokemon = document.querySelector('#all-button');
+if (!$Allpokemon)
+    throw new Error('The $Allpokemon query failed');
+const $kantoButton = document.querySelector('#kanto-button');
+if (!$kantoButton)
+    throw new Error('The $kantoButton query failed');
+const $johtoButton = document.querySelector('#johto-button');
+if (!$johtoButton)
+    throw new Error('The $johtoButton query failed');
+const $hoennButton = document.querySelector('#hoenn-button');
+if (!$hoennButton)
+    throw new Error('The $hoennButton query failed');
+const $sinnohButton = document.querySelector('#sinnoh-button');
+if (!$sinnohButton)
+    throw new Error('The $sinnohButton query failed');
+const $unovaButton = document.querySelector('#unova-button');
+if (!$unovaButton)
+    throw new Error('The $unovaButton query failed');
+const $kalosButton = document.querySelector('#kalos-button');
+if (!$kalosButton)
+    throw new Error('The $kalosButton query failed');
+const $alolaButton = document.querySelector('#alola-button');
+if (!$alolaButton)
+    throw new Error('The $alolaButton query failed');
+const $galarButton = document.querySelector('#galar-button');
+if (!$galarButton)
+    throw new Error('The $galarButton query failed');
+const $paldeaButton = document.querySelector('#paldea-button');
+if (!$paldeaButton)
+    throw new Error('The $paldeaButton query failed');
