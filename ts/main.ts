@@ -177,3 +177,51 @@ $kantoButton.addEventListener('click', () => {
   const kantoUrl = regionsObj.kanto;
   fetchRegionOfPokemon(kantoUrl);
 });
+
+$johtoButton.addEventListener('click', () => {
+  clearPokemon();
+  const johtoUrl = regionsObj.johto;
+  fetchRegionOfPokemon(johtoUrl);
+});
+
+$hoennButton.addEventListener('click', () => {
+  clearPokemon();
+  const hoennUrl = regionsObj.hoenn;
+  fetchRegionOfPokemon(hoennUrl);
+});
+
+$sinnohButton.addEventListener('click', () => {
+  clearPokemon();
+  const sinnohUrl = regionsObj.sinnoh;
+  fetchRegionOfPokemon(sinnohUrl);
+});
+
+$unovaButton.addEventListener('click', () => {
+  clearPokemon();
+  const unovaUrl = regionsObj.unova;
+  fetchRegionOfPokemon(unovaUrl);
+});
+
+$kalosButton.addEventListener('click', () => {
+  clearPokemon();
+  const kalosUrl = regionsObj.kalos;
+  fetchRegionOfPokemon(kalosUrl);
+});
+
+$alolaButton.addEventListener('click', () => {
+  clearPokemon();
+  const alolaUrl = regionsObj.alola;
+  fetchRegionOfPokemon(alolaUrl);
+});
+
+$galarButton.addEventListener('click', () => {
+  clearPokemon();
+  const galarUrl = regionsObj.galar;
+  fetchRegionOfPokemon(galarUrl);
+});
+
+$paldeaButton.addEventListener('click', () => {
+  clearPokemon();
+  const paldeaUrl = regionsObj.paldea;
+  fetchRegionOfPokemon(paldeaUrl);
+});
