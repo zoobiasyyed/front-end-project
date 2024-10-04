@@ -71,7 +71,6 @@ async function fetchLegendaryPokemon(): Promise<void> {
     const data = await response.json();
     // storing into empty array
     allPokemonData = data.results;
-    console.log(allPokemonData);
 
     for (let i = 0; i < data.results.length; i++) {
       const id = i + 1;
