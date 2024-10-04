@@ -2,6 +2,7 @@
 // fetch from pokemon API
 // interface for Pokemon Species
 // creating object of regions
+let allPokemonData = [];
 const regionsObj = {
     kanto: 'https://pokeapi.co/api/v2/pokedex/2',
     johto: 'https://pokeapi.co/api/v2/pokedex/3',
@@ -56,6 +57,8 @@ async function fetchLegendaryPokemon() {
         }
         // for response
         const data = await response.json();
+        allPokemonData = data.results;
+        console.log('pokemon data', allPokemonData);
         for (let i = 0; i < data.results.length; i++) {
             const id = i + 1;
             let formatedId = null;
@@ -81,7 +84,6 @@ async function fetchLegendaryPokemon() {
 }
 fetchLegendaryPokemon();
 // FETCHING REGION CONTENT
-console.log('Before fetch');
 async function fetchRegionOfPokemon(regionURL) {
     try {
         const fetchRegion = await fetch(regionURL);
@@ -91,7 +93,6 @@ async function fetchRegionOfPokemon(regionURL) {
         // for response
         const regionData = await fetchRegion.json();
         const listOfPokemon = regionData.pokemon_entries;
-        console.log('regionData', regionData);
         for (let i = 0; i < listOfPokemon.length; i++) {
             const id = listOfPokemon[i].entry_number;
             let formatedId;
@@ -107,7 +108,6 @@ async function fetchRegionOfPokemon(regionURL) {
             else {
                 formatedId = id;
             }
-            console.log('list of pokemon', listOfPokemon);
             const renderData = renderPokemon(listOfPokemon[i].pokemon_species, formatedId);
             $pokemonRow?.appendChild(renderData);
         }
@@ -185,4 +185,8 @@ $paldeaButton.addEventListener('click', () => {
     clearPokemon();
     const paldeaUrl = regionsObj.paldea;
     fetchRegionOfPokemon(paldeaUrl);
+});
+$Allpokemon.addEventListener('click', () => {
+    clearPokemon();
+    fetchLegendaryPokemon();
 });
