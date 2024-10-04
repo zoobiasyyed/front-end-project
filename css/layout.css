@@ -45,25 +45,25 @@ header {
 }
 
 @media screen and (width >= 585px) {
-  .column-half {
+  .column-third {
     width: calc(100% / 3);
   }
 }
 
 @media screen and (width >= 850px) {
-  .column-half {
+  .column-fourth {
     width: calc(100% / 4);
   }
 }
 
 @media screen and (width >= 1150px) {
-  .column-half {
+  .column-fifth {
     width: calc(100% / 5);
   }
 }
 
 @media screen and (width >= 1300px) {
-  .column-half {
+  .column-sixth {
     width: calc(100% / 6);
   }
 }

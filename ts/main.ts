@@ -71,7 +71,6 @@ async function fetchLegendaryPokemon(): Promise<void> {
     const data = await response.json();
     // storing into empty array
     allPokemonData = data.results;
-    console.log('pokemon data', allPokemonData);
 
     for (let i = 0; i < data.results.length; i++) {
       const id = i + 1;
@@ -111,8 +110,6 @@ async function fetchRegionOfPokemon(regionURL: string): Promise<void> {
     const listOfPokemon = regionData.pokemon_entries;
 
     for (let i = 0; i < listOfPokemon.length; i++) {
-      // const id = listOfPokemon[i].entry_number;
-
       let correctId = '';
       for (let x = 0; x < allPokemonData.length; x++) {
         if (allPokemonData[x].name === listOfPokemon[i].pokemon_species.name) {
@@ -149,6 +146,8 @@ async function fetchRegionOfPokemon(regionURL: string): Promise<void> {
 function renderPokemon(pokemon: Pokemoncard, id: string): HTMLElement {
   const $pokemonColumn = document.createElement('div');
   $pokemonColumn.setAttribute('class', 'column-half');
+  $pokemonColumn.className =
+    'column-half column-third column-fourth column-fifth column-sixth';
 
   const $pokemonCard = document.createElement('div');
   $pokemonCard.setAttribute('class', 'pokemon-card');
