@@ -1,20 +1,79 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AJAX Project</title>
-  <link rel="icon" href="images/favicon.ico">
-  <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="css/layout.css">
-  <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
-  <header>
-  </header>
-  <main>
-  </main>
-  <script src="js/data.js"></script>
-  <script src="js/main.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pokedex</title>
+    <link rel="icon" href="images/favicon.ico" />
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="row">
+          <div class="column-full green-header">
+            <button type="button" id="favories-button">Favorites ♡</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="column white-header">
+            <img
+              id="pokedex-legendary"
+              src="images/pokedex.png"
+              alt="pokedex-logo" />
+          </div>
+        </div>
+        <div class="green-header">
+          <div class="row region-row">
+            <div class="column-nine">
+              <a href="#main-form" class="region-button" id="all-button">ALL</a>
+            </div>
+            <div class="column-nine">
+              <a href="#kanto-form" class="region-button" id="kanto">KANTO</a>
+            </div>
+            <div class="column-nine">
+              <a href="#johto-form" class="region-button" id="johto">JOHTO</a>
+            </div>
+            <div class="column-nine">
+              <a href="#hoenn-form" class="region-button" id="hoenn">HOENN</a>
+            </div>
+            <div class="column-nine">
+              <a href="#sinnoh-form" class="region-button" id="sinnoh"
+                >SINNOH</a
+              >
+            </div>
+            <div class="column-nine">
+              <a href="#unova-form" class="region-button" id="unova">UNOVA</a>
+            </div>
+            <div class="column-nine">
+              <a href="#kalos-form" class="region-button" id="kalos">KALOS</a>
+            </div>
+            <div class="column-nine">
+              <a href="#alola-form" class="region-button" id="alola">ALOLA</a>
+            </div>
+            <div class="column-nine">
+              <a href="#galar-form" class="region-button" id="galar">GALAR</a>
+            </div>
+            <div class="column-nine">
+              <a href="#paldea-form" class="region-button" id="paldea"
+                >PALDEA</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main>
+      <div data-view="main-form" id="main-form">
+        <div class="container-main">
+          <div class="row"></div>
+          <div class="pokemon-image-row row"></div>
+        </div>
+      </div>
+    </main>
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+  </body>
 </html>
