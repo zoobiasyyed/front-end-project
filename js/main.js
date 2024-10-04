@@ -17,8 +17,8 @@ const regionsObj = {
 // querying for pokemon row
 const $pokemonRow = document.querySelector('.pokemon-image-row');
 // create event listener for the regions tab, event bubbling
-const $Allpokemon = document.querySelector('#all-button');
-if (!$Allpokemon) throw new Error('The $Allpokemon query failed');
+const $allPokemon = document.querySelector('#all-button');
+if (!$allPokemon) throw new Error('The $Allpokemon query failed');
 const $kantoButton = document.querySelector('#kanto-button');
 if (!$kantoButton) throw new Error('The $kantoButton query failed');
 const $johtoButton = document.querySelector('#johto-button');
@@ -51,6 +51,7 @@ async function fetchLegendaryPokemon() {
     const data = await response.json();
     // storing into empty array
     allPokemonData = data.results;
+    console.log(allPokemonData);
     for (let i = 0; i < data.results.length; i++) {
       const id = i + 1;
       let formatedId = null;
@@ -119,6 +120,7 @@ function renderPokemon(pokemon, id) {
   const $pokemonImage = document.createElement('img');
   $pokemonImage.setAttribute('class', 'pokemon-image');
   $pokemonImage.setAttribute('src', `images/downloads/${id}.png`);
+  $pokemonImage.setAttribute('alt', `pokemon image: ${id}`);
   const $pForPokemonCard = document.createElement('p');
   $pForPokemonCard.setAttribute('class', 'pokemon-description');
   const capitilizedName =
@@ -136,52 +138,32 @@ function clearPokemon() {
     $pokemonRow.innerHTML = '';
   }
 }
-$kantoButton.addEventListener('click', () => {
-  clearPokemon();
-  const kantoUrl = regionsObj.kanto;
-  fetchRegionOfPokemon(kantoUrl);
+const $regionRow = document.querySelector('.region-row');
+$regionRow?.addEventListener('click', (event) => {
+  const eventTarget = event.target;
+  const $closestRegion = eventTarget?.closest('a');
+  if ($closestRegion) {
+    const regionId = $closestRegion.id;
+    // creating an object to store everyting
+    const regionObject = {
+      'kanto-button': regionsObj.kanto,
+      'johto-button': regionsObj.johto,
+      'hoenn-button': regionsObj.hoenn,
+      'sinnoh-button': regionsObj.sinnoh,
+      'unova-button': regionsObj.unova,
+      'kalos-button': regionsObj.kalos,
+      'alola-button': regionsObj.alola,
+      'galar-button': regionsObj.galar,
+      'paldea-button': regionsObj.paldea,
+    };
+    const regionUrl = regionObject[regionId];
+    if (regionUrl) {
+      clearPokemon();
+      fetchRegionOfPokemon(regionUrl);
+    }
+  }
 });
-$johtoButton.addEventListener('click', () => {
-  clearPokemon();
-  const johtoUrl = regionsObj.johto;
-  fetchRegionOfPokemon(johtoUrl);
-});
-$hoennButton.addEventListener('click', () => {
-  clearPokemon();
-  const hoennUrl = regionsObj.hoenn;
-  fetchRegionOfPokemon(hoennUrl);
-});
-$sinnohButton.addEventListener('click', () => {
-  clearPokemon();
-  const sinnohUrl = regionsObj.sinnoh;
-  fetchRegionOfPokemon(sinnohUrl);
-});
-$unovaButton.addEventListener('click', () => {
-  clearPokemon();
-  const unovaUrl = regionsObj.unova;
-  fetchRegionOfPokemon(unovaUrl);
-});
-$kalosButton.addEventListener('click', () => {
-  clearPokemon();
-  const kalosUrl = regionsObj.kalos;
-  fetchRegionOfPokemon(kalosUrl);
-});
-$alolaButton.addEventListener('click', () => {
-  clearPokemon();
-  const alolaUrl = regionsObj.alola;
-  fetchRegionOfPokemon(alolaUrl);
-});
-$galarButton.addEventListener('click', () => {
-  clearPokemon();
-  const galarUrl = regionsObj.galar;
-  fetchRegionOfPokemon(galarUrl);
-});
-$paldeaButton.addEventListener('click', () => {
-  clearPokemon();
-  const paldeaUrl = regionsObj.paldea;
-  fetchRegionOfPokemon(paldeaUrl);
-});
-$Allpokemon.addEventListener('click', () => {
+$allPokemon.addEventListener('click', () => {
   clearPokemon();
   fetchLegendaryPokemon();
 });
