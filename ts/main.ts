@@ -6,11 +6,34 @@ interface Pokemoncard {
   name: string;
 }
 
+interface Regions {
+  kanto: string;
+  johto: string;
+  hoenn: string;
+  sinnoh: string;
+  unova: string;
+  kalos: string;
+  alola: string;
+  galar: string;
+  paldea: string;
+}
+
+type Region =
+  | 'kanto'
+  | 'johto'
+  | 'hoenn'
+  | 'sinnoh'
+  | 'unova'
+  | 'kalos'
+  | 'alola'
+  | 'galar'
+  | 'paldea';
+
 // creating object of regions
 
 let allPokemonData: Pokemoncard[] = [];
 
-const regionsObj = {
+const regionsObj: Regions = {
   kanto: 'https://pokeapi.co/api/v2/pokedex/2',
   johto: 'https://pokeapi.co/api/v2/pokedex/3',
   hoenn: 'https://pokeapi.co/api/v2/pokedex/4',
@@ -28,31 +51,31 @@ const $pokemonRow = document.querySelector('.pokemon-image-row');
 const $allPokemon = document.querySelector('#all-button');
 if (!$allPokemon) throw new Error('The $Allpokemon query failed');
 
-const $kantoButton = document.querySelector('#kanto-button');
+const $kantoButton = document.querySelector('#kanto');
 if (!$kantoButton) throw new Error('The $kantoButton query failed');
 
-const $johtoButton = document.querySelector('#johto-button');
+const $johtoButton = document.querySelector('#johto');
 if (!$johtoButton) throw new Error('The $johtoButton query failed');
 
-const $hoennButton = document.querySelector('#hoenn-button');
+const $hoennButton = document.querySelector('#hoenn');
 if (!$hoennButton) throw new Error('The $hoennButton query failed');
 
-const $sinnohButton = document.querySelector('#sinnoh-button');
+const $sinnohButton = document.querySelector('#sinnoh');
 if (!$sinnohButton) throw new Error('The $sinnohButton query failed');
 
-const $unovaButton = document.querySelector('#unova-button');
+const $unovaButton = document.querySelector('#unova');
 if (!$unovaButton) throw new Error('The $unovaButton query failed');
 
-const $kalosButton = document.querySelector('#kalos-button');
+const $kalosButton = document.querySelector('#kalos');
 if (!$kalosButton) throw new Error('The $kalosButton query failed');
 
-const $alolaButton = document.querySelector('#alola-button');
+const $alolaButton = document.querySelector('#alola');
 if (!$alolaButton) throw new Error('The $alolaButton query failed');
 
-const $galarButton = document.querySelector('#galar-button');
+const $galarButton = document.querySelector('#galar');
 if (!$galarButton) throw new Error('The $galarButton query failed');
 
-const $paldeaButton = document.querySelector('#paldea-button');
+const $paldeaButton = document.querySelector('#paldea');
 if (!$paldeaButton) throw new Error('The $paldeaButton query failed');
 
 // FETCHING ALL POKEMON CONTENT
@@ -186,21 +209,9 @@ $regionRow?.addEventListener('click', (event: Event) => {
   const $closestRegion = eventTarget?.closest('a');
 
   if ($closestRegion) {
-    const regionId = $closestRegion.id;
-    // creating an object to store everyting
-    const regionObject: { [key: string]: string } = {
-      'kanto-button': regionsObj.kanto,
-      'johto-button': regionsObj.johto,
-      'hoenn-button': regionsObj.hoenn,
-      'sinnoh-button': regionsObj.sinnoh,
-      'unova-button': regionsObj.unova,
-      'kalos-button': regionsObj.kalos,
-      'alola-button': regionsObj.alola,
-      'galar-button': regionsObj.galar,
-      'paldea-button': regionsObj.paldea,
-    };
+    const regionId = $closestRegion.id as Region;
 
-    const regionUrl = regionObject[regionId];
+    const regionUrl = regionsObj[regionId];
 
     if (regionUrl) {
       clearPokemon();

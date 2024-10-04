@@ -19,23 +19,23 @@ const $pokemonRow = document.querySelector('.pokemon-image-row');
 // create event listener for the regions tab, event bubbling
 const $allPokemon = document.querySelector('#all-button');
 if (!$allPokemon) throw new Error('The $Allpokemon query failed');
-const $kantoButton = document.querySelector('#kanto-button');
+const $kantoButton = document.querySelector('#kanto');
 if (!$kantoButton) throw new Error('The $kantoButton query failed');
-const $johtoButton = document.querySelector('#johto-button');
+const $johtoButton = document.querySelector('#johto');
 if (!$johtoButton) throw new Error('The $johtoButton query failed');
-const $hoennButton = document.querySelector('#hoenn-button');
+const $hoennButton = document.querySelector('#hoenn');
 if (!$hoennButton) throw new Error('The $hoennButton query failed');
-const $sinnohButton = document.querySelector('#sinnoh-button');
+const $sinnohButton = document.querySelector('#sinnoh');
 if (!$sinnohButton) throw new Error('The $sinnohButton query failed');
-const $unovaButton = document.querySelector('#unova-button');
+const $unovaButton = document.querySelector('#unova');
 if (!$unovaButton) throw new Error('The $unovaButton query failed');
-const $kalosButton = document.querySelector('#kalos-button');
+const $kalosButton = document.querySelector('#kalos');
 if (!$kalosButton) throw new Error('The $kalosButton query failed');
-const $alolaButton = document.querySelector('#alola-button');
+const $alolaButton = document.querySelector('#alola');
 if (!$alolaButton) throw new Error('The $alolaButton query failed');
-const $galarButton = document.querySelector('#galar-button');
+const $galarButton = document.querySelector('#galar');
 if (!$galarButton) throw new Error('The $galarButton query failed');
-const $paldeaButton = document.querySelector('#paldea-button');
+const $paldeaButton = document.querySelector('#paldea');
 if (!$paldeaButton) throw new Error('The $paldeaButton query failed');
 // FETCHING ALL POKEMON CONTENT
 async function fetchLegendaryPokemon() {
@@ -51,7 +51,6 @@ async function fetchLegendaryPokemon() {
     const data = await response.json();
     // storing into empty array
     allPokemonData = data.results;
-    console.log(allPokemonData);
     for (let i = 0; i < data.results.length; i++) {
       const id = i + 1;
       let formatedId = null;
@@ -144,19 +143,7 @@ $regionRow?.addEventListener('click', (event) => {
   const $closestRegion = eventTarget?.closest('a');
   if ($closestRegion) {
     const regionId = $closestRegion.id;
-    // creating an object to store everyting
-    const regionObject = {
-      'kanto-button': regionsObj.kanto,
-      'johto-button': regionsObj.johto,
-      'hoenn-button': regionsObj.hoenn,
-      'sinnoh-button': regionsObj.sinnoh,
-      'unova-button': regionsObj.unova,
-      'kalos-button': regionsObj.kalos,
-      'alola-button': regionsObj.alola,
-      'galar-button': regionsObj.galar,
-      'paldea-button': regionsObj.paldea,
-    };
-    const regionUrl = regionObject[regionId];
+    const regionUrl = regionsObj[regionId];
     if (regionUrl) {
       clearPokemon();
       fetchRegionOfPokemon(regionUrl);
