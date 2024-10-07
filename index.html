@@ -66,10 +66,69 @@
       </div>
     </header>
     <main>
-      <div data-view="main-form" id="main-form">
+      <div data-view="main-form" id="main-form" class="hidden">
         <div class="container-main">
           <div class="row"></div>
           <div class="pokemon-image-row row"></div>
+        </div>
+      </div>
+      <div data-view="pokemon-info">
+        <div class="container box-feature">
+          <div class="column-full">
+            <p>♡</p>
+          </div>
+          <div class="column pokemon-feature">
+            <img
+              class="pokemon-image-feature"
+              src="images/downloads/0001.png"
+              alt="pokemon-image" />
+          </div>
+          <div class="column pokemon-feature">
+            <p>Pokemon name</p>
+            <div class="tabbed-views">
+              <div class="view-container">
+                <div class="view" data-view="info">
+                  <div class="info">
+                    <p>
+                      this is where the info should go for the pokemon. blah
+                      blah blah.this is where the info should go for the
+                      pokemon. blah blah blah.this is where the info should go
+                      for the pokemon. blah blah blah.this is where the info
+                      should go for the pokemon. blah blah blah.this is where
+                      the info should go for the pokemon. blah blah blah.
+                    </p>
+                  </div>
+                </div>
+                <div class="view hidden" data-view="weakness">
+                  <div class="weakness">
+                    <p>This is where the weaknesses of the pokemon will go</p>
+                  </div>
+                </div>
+                <div class="view hidden" data-view="special-moves">
+                  <div class="special-moves">
+                    <p>
+                      this is where the special moves should go for the pokemon.
+                      blah blah blah
+                    </p>
+                  </div>
+                </div>
+                <div class="view hidden" data-view="stats">
+                  <div class="stats">
+                    <p>
+                      this is where the stats should go for the pokemon. blah
+                      blah blah
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-container">
+                <div class="tab active" data-view="info">info</div>
+                <div class="tab" data-view="weakness">weakness</div>
+                <div class="tab" data-view="special-moves">special moves</div>
+                <div class="tab" data-view="stats">stats</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </main>

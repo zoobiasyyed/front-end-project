@@ -224,3 +224,5 @@ $allPokemon.addEventListener('click', () => {
   clearPokemon();
   fetchLegendaryPokemon();
 });
+
+// feature for when u click on a pokemon
