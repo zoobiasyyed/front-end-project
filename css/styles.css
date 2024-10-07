@@ -86,19 +86,23 @@ form {
 
 .box-feature {
   width: 100%;
-  background-color: rgb(184, 250, 250);
+  background-color: #f7f6f6;
   height: 100%;
 }
 
 .pokemon-image-feature {
   margin: 30px;
   width: 70%;
-  background-color: white;
+}
+
+.heart {
+  padding-right: 30px;
 }
 
 .tabbed-views {
   max-width: 300px;
   margin: 0 auto;
+  padding-bottom: 40px;
 }
 
 .tab-container {
@@ -108,6 +112,7 @@ form {
 
 .tab {
   display: flex;
+  justify-content: center;
   align-items: center;
   flex-wrap: wrap;
   padding: 0.45rem 1rem 0.5rem;
@@ -115,51 +120,51 @@ form {
   border-bottom-right-radius: 0.5rem;
   border-bottom-left-radius: 0.45rem;
   cursor: pointer;
-  font-size: 10px;
-  color: rgb(128, 128, 128);
-  background-color: rgb(219, 219, 219);
+  font-size: 13px;
+  color: rgb(2, 2, 2);
+  background-color: #9f5877;
 }
 
 .tab.active {
   border-top: none;
   border-bottom-width: 0.25rem;
-  background-color: white;
+  background-color: #ffe4f0;
 }
 
 [data-view='info'].tab.active {
-  color: rgb(241, 37, 7);
-  border-bottom-color: rgb(241, 37, 7);
+  color: rgb(0, 0, 0);
+  border-bottom-color: rgb(0, 0, 0);
 }
 
 [data-view='weakness'].tab.active {
-  color: rgb(47, 112, 188);
-  border-bottom-color: rgb(47, 112, 188);
+  color: rgb(0, 0, 0);
+  border-bottom-color: rgb(0, 0, 0);
 }
 
 [data-view='special-moves'].tab.active {
-  color: rgb(47, 112, 188);
-  border-bottom-color: rgb(47, 112, 188);
+  color: rgb(0, 0, 0);
+  border-bottom-color: rgb(0, 0, 0);
 }
 
 [data-view='stats'].tab.active {
-  color: rgb(47, 112, 188);
-  border-bottom-color: rgb(47, 112, 188);
+  color: rgb(0, 0, 0);
+  border-bottom-color: rgb(0, 0, 0);
 }
 
 .view-container {
   border: solid;
-  border-bottom: white;
+  border-bottom: none;
   border-top-right-radius: 0.35rem;
   border-top-left-radius: 0.35rem;
   border-bottom-right-radius: 0.25rem;
-  background-color: white;
+  background-color: #ffe4f0;
   box-shadow: 0 6px 8px -6px rgba(0, 0, 0, 0.4);
 }
 
 .tab,
 .view-container {
-  border-width: 1px;
-  border-color: rgb(175, 175, 175);
+  border-width: 0.1px;
+  border-color: black;
 }
 
 .view {
