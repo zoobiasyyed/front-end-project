@@ -11,6 +11,7 @@ header {
 .row {
   width: 100%;
   margin: 0 auto;
+  display: flex;
 }
 
 .region-row {
@@ -41,24 +42,41 @@ header {
 .column {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   width: 100%;
 }
 
-.pokemon-feature {
-  width: 100%;
+.column-pokemon-feature {
+  display: flex;
   align-items: center;
   flex-direction: column;
-}
-
-.column-half-feature {
-  display: flex;
-  width: 50%;
-  align-items: center;
+  width: 100%;
 }
 
 @media screen and (width >= 585px) {
   .column-third {
     width: calc(100% / 3);
+  }
+}
+
+@media screen and (width >= 730px) {
+  .column-pokemon-feature {
+    flex-direction: row;
+  }
+
+  .pokemon-image-container {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .pokemon-info-container {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding-left: 20px;
   }
 }
 
