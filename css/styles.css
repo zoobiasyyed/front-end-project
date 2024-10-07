@@ -96,13 +96,20 @@ form {
 }
 
 .heart {
-  padding-right: 30px;
+  background-color: #f7f6f6;
+  padding: 20px;
+  border: none;
+}
+
+.pokemon-name {
+  font-size: 20px;
+  font-style: oblique;
 }
 
 .tabbed-views {
   max-width: 300px;
   margin: 0 auto;
-  padding-bottom: 40px;
+  padding-bottom: 60px;
 }
 
 .tab-container {
