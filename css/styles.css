@@ -86,9 +86,7 @@ form {
 
 .box-feature {
   width: 100%;
-  background-color: #f7f6f6;
   height: 100%;
-  background-image: url('https://static.vecteezy.com/system/resources/previews/001/836/123/non_2x/abstract-grey-background-poster-with-dynamic-design-vector.jpg');
 }
 
 .pokemon-image-feature {
@@ -109,7 +107,7 @@ form {
 .tabbed-views {
   width: 80%;
   margin: 0 auto;
-  padding-bottom: 60px;
+  padding-bottom: 30px;
 }
 
 .tab-container {

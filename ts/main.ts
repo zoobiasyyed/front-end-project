@@ -2,7 +2,7 @@
 // interface for Pokemon Species
 
 interface Pokemoncard {
-  imageUrl: string;
+  url: string;
   name: string;
 }
 
@@ -169,6 +169,8 @@ async function fetchRegionOfPokemon(regionURL: string): Promise<void> {
 function renderPokemon(pokemon: Pokemoncard, id: string): HTMLElement {
   const $pokemonColumn = document.createElement('div');
   $pokemonColumn.setAttribute('class', 'column-half');
+  // from brett
+  $pokemonColumn.dataset.url = pokemon.url;
   $pokemonColumn.className =
     'column-half column-third column-fourth column-fifth column-sixth';
 
@@ -226,3 +228,31 @@ $allPokemon.addEventListener('click', () => {
 });
 
 // feature for when u click on a pokemon
+// You'll add event listeners to each pokemon card, so that when you click on them it will do three things:
+// Make an API call to get information for that specific pokemon
+// Switch views
+// Render the pokemon data on the screen with a DOM function and append it!
+
+//
+const $pokemonCard = document.querySelector('.pokemon-image-row');
+if (!$pokemonCard) throw new Error('query for $pokemonCard failed');
+// creating an event listener
+
+$pokemonCard.addEventListener('click', (event: any) => {
+  fetchUrl(event.target.closest('.column-half').dataset.url);
+});
+
+// making API call
+async function fetchUrl(pokemonUrl: string): Promise<void> {
+  try {
+    const fetchUrl = await fetch(pokemonUrl);
+
+    if (!fetchUrl.ok) {
+      throw new Error(`Error fetching Pokémon species: ${fetchUrl.status}`);
+    }
+    const urlData = await fetchUrl.json();
+    console.log('hi', urlData);
+  } catch (error) {
+    console.error('Error fetching legendary Pokémon:', error);
+  }
+}
