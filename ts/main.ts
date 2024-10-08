@@ -238,21 +238,98 @@ const $pokemonCard = document.querySelector('.pokemon-image-row');
 if (!$pokemonCard) throw new Error('query for $pokemonCard failed');
 // creating an event listener
 
-$pokemonCard.addEventListener('click', (event: any) => {
-  fetchUrl(event.target.closest('.column-half').dataset.url);
-});
+// $pokemonCard.addEventListener('click', (event: any) => {
+// }
 
 // making API call
-async function fetchUrl(pokemonUrl: string): Promise<void> {
+async function fetchUrl(name: Pokemoncard): Promise<void> {
   try {
-    const fetchUrl = await fetch(pokemonUrl);
+    const fetchUrl = await fetch(
+      `https://pokeapi.co/api/v2/pokemon-species/${name}`,
+    );
 
     if (!fetchUrl.ok) {
-      throw new Error(`Error fetching Pokémon species: ${fetchUrl.status}`);
+      throw new Error(`Error fetching Pokémon Url: ${fetchUrl.status}`);
     }
     const urlData = await fetchUrl.json();
-    console.log('hi', urlData);
+    console.log('url data', urlData);
   } catch (error) {
-    console.error('Error fetching legendary Pokémon:', error);
+    console.error('Error fetching Pokemon url:', error);
   }
+}
+
+async function fetchInfo(name: Pokemoncard): Promise<void> {
+  try {
+    const fetchAbilities = await fetch(
+      `https://pokeapi.co/api/v2/pokemon/${name}`,
+    );
+
+    if (!fetchAbilities.ok) {
+      throw new Error(
+        `Error fetching Pokémon Abilities: ${fetchAbilities.status}`,
+      );
+    }
+
+    const pokeAbilities = await fetchAbilities.json();
+    console.log(pokeAbilities);
+  } catch (error) {
+    console.error('Error fetching Pokemon Abilities:', error);
+  }
+}
+
+// to render dom elements
+
+function renderInfo(pokemon: Pokemoncard, id: string): any {
+  const $row = document.createElement('div');
+  $row.setAttribute('class', 'row');
+
+  const $columnPokemonFeature = document.createElement('div');
+  $columnPokemonFeature.setAttribute('class', 'column-pokemon-feature');
+
+  const $pokemonImageContainer = document.createElement('div');
+  $pokemonImageContainer.setAttribute('class', 'pokemon-image-container');
+
+  const $image = document.createElement('img');
+  $image.setAttribute('class', 'pokemon-image');
+  $image.setAttribute('src', `images/downloads/${id}.png`);
+  $image.setAttribute('alt', `pokemon image: ${id}`);
+
+  const $pokemonInfoContainer = document.createElement('div');
+  $pokemonInfoContainer.setAttribute('class', 'pokemon-info-container');
+
+  const $pokemonName = document.createElement('p');
+  $pokemonName.setAttribute('class', 'pokemon-name');
+  const capitilizedName =
+    pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
+  $pokemonName.textContent = `${capitilizedName} #${id}`;
+
+  const $tabbedViews = document.createElement('div');
+  $tabbedViews.setAttribute('class', 'tabbed-views');
+
+  const $viewContainer = document.createElement('div');
+  $viewContainer.setAttribute('class', 'view-container');
+
+  const $viewInfo = document.createElement('div');
+  $viewInfo.setAttribute('class', 'view');
+  $viewInfo.setAttribute('data-view', 'info');
+
+  const $info = document.createElement('div');
+  $info.setAttribute('class', 'info');
+
+  const $infoP = document.createElement('p');
+  // $infoP.textContent =
+
+  const $weaknessView = document.createElement('div');
+  $weaknessView.setAttribute('class', 'view hidden');
+  $weaknessView.setAttribute('data-view', 'weakness');
+
+  const $weakness = document.createElement('div');
+  $weakness.setAttribute('class', 'weakness');
+
+  const $pWeakness = document.createElement('p');
+  // $pWeakness.textContent =
+
+  const $viewSpecialMoves = document.createElement('div');
+  $viewSpecialMoves.setAttribute('class', 'view hidden');
+  $viewSpecialMoves.setAttribute('data-view', 'special-moves');
 }
