@@ -200,7 +200,7 @@ async function fetchUrl(name) {
         }
         const urlData = await fetchUrl.json();
         console.log(urlData);
-        return urlData;
+        return urlData.flavor_text_entries[0].flavor_text;
     }
     catch (error) {
         console.error('Error fetching Pokemon url:', error);
