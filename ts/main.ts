@@ -18,6 +18,12 @@ interface Regions {
   paldea: string;
 }
 
+interface PokemonInfo {
+  abilities: string[];
+  height: number;
+  moves: string[];
+}
+
 type Region =
   | 'kanto'
   | 'johto'
