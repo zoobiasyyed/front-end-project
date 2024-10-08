@@ -4,6 +4,7 @@
 interface Pokemoncard {
   url: string;
   name: string;
+  flavorTextEntries: string[];
 }
 
 interface Regions {
@@ -19,9 +20,9 @@ interface Regions {
 }
 
 interface PokemonInfo {
+  name: string;
   abilities: string[];
-  height: number;
-  moves: string[];
+  stats: any[];
 }
 
 type Region =
@@ -177,6 +178,7 @@ function renderPokemon(pokemon: Pokemoncard, id: string): HTMLElement {
   $pokemonColumn.setAttribute('class', 'column-half');
   // from brett
   $pokemonColumn.dataset.url = pokemon.url;
+  $pokemonColumn.dataset.name = pokemon.name;
   $pokemonColumn.className =
     'column-half column-third column-fourth column-fifth column-sixth';
 
@@ -244,12 +246,23 @@ const $pokemonCard = document.querySelector('.pokemon-image-row');
 if (!$pokemonCard) throw new Error('query for $pokemonCard failed');
 // creating an event listener
 
-// $pokemonCard.addEventListener('click', (event: any) => {
+$pokemonCard.addEventListener('click', (event: Event) => {
+  const eventTarget = event.target as HTMLElement;
+  const clickedCard = eventTarget.closest('.column-half') as HTMLElement;
+  console.log(clickedCard.dataset.name);
+  const datasetName = clickedCard.dataset.name;
 
-// }
+  if (clickedCard && datasetName) {
+    const flavorText = fetchUrl(datasetName);
+    console.log('flavortxt', flavorText);
+    const pokemonDetails = fetchInfo(datasetName);
+
+    // renderInfo(flavorText, pokemonDetails);
+  }
+});
 
 // making API call
-async function fetchUrl(name: Pokemoncard): Promise<void> {
+async function fetchUrl(name: string): Promise<string | undefined> {
   try {
     const fetchUrl = await fetch(
       `https://pokeapi.co/api/v2/pokemon-species/${name}`,
@@ -259,13 +272,15 @@ async function fetchUrl(name: Pokemoncard): Promise<void> {
       throw new Error(`Error fetching Pokémon Url: ${fetchUrl.status}`);
     }
     const urlData = await fetchUrl.json();
-    console.log('url data', urlData);
+    console.log(urlData);
+
+    return urlData;
   } catch (error) {
     console.error('Error fetching Pokemon url:', error);
   }
 }
 
-async function fetchInfo(name: Pokemoncard): Promise<void> {
+async function fetchInfo(name: string): Promise<void> {
   try {
     const fetchAbilities = await fetch(
       `https://pokeapi.co/api/v2/pokemon/${name}`,
@@ -278,7 +293,7 @@ async function fetchInfo(name: Pokemoncard): Promise<void> {
     }
 
     const pokeAbilities = await fetchAbilities.json();
-    console.log(pokeAbilities);
+    return pokeAbilities;
   } catch (error) {
     console.error('Error fetching Pokemon Abilities:', error);
   }
@@ -286,103 +301,102 @@ async function fetchInfo(name: Pokemoncard): Promise<void> {
 
 // to render dom elements
 
-function renderInfo(pokemon: Pokemoncard, id: string): any {
-  const $row = document.createElement('div');
-  $row.setAttribute('class', 'row');
-
+function renderInfo(pokemon: Pokemoncard, pokeStats: PokemonInfo): HTMLElement {
   const $columnPokemonFeature = document.createElement('div');
   $columnPokemonFeature.setAttribute('class', 'column-pokemon-feature');
-  $columnPokemonFeature.appendChild($row);
 
   const $pokemonImageContainer = document.createElement('div');
   $pokemonImageContainer.setAttribute('class', 'pokemon-image-container');
-  $pokemonImageContainer.appendChild($columnPokemonFeature);
+  $columnPokemonFeature.appendChild($pokemonImageContainer);
 
   const $image = document.createElement('img');
   $image.setAttribute('class', 'pokemon-image');
-  $image.setAttribute('src', `images/downloads/${id}.png`);
-  $image.setAttribute('alt', `pokemon image: ${id}`);
-  $image.appendChild($pokemonImageContainer);
+  $image.setAttribute('src', `images/downloads/${pokemon.name}.png`);
+  $image.setAttribute('alt', `pokemon image: ${pokemon.name}`);
+  $pokemonImageContainer.appendChild($image);
 
   const $pokemonInfoContainer = document.createElement('div');
   $pokemonInfoContainer.setAttribute('class', 'pokemon-info-container');
-  $pokemonInfoContainer.appendChild($columnPokemonFeature);
+  $columnPokemonFeature.appendChild($pokemonInfoContainer);
 
   const $pokemonName = document.createElement('p');
   $pokemonName.setAttribute('class', 'pokemon-name');
-  const capitilizedName =
-    pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
-  $pokemonName.textContent = `${capitilizedName} #${id}`;
-  $pokemonName.appendChild($pokemonInfoContainer);
+  $pokemonName.textContent = pokemon.name;
+  $pokemonInfoContainer.appendChild($pokemonName);
 
   const $tabbedViews = document.createElement('div');
   $tabbedViews.setAttribute('class', 'tabbed-views');
-  $tabbedViews.appendChild($pokemonInfoContainer);
+  $pokemonInfoContainer.appendChild($tabbedViews);
 
   const $viewContainer = document.createElement('div');
   $viewContainer.setAttribute('class', 'view-container');
-  $viewContainer.appendChild($tabbedViews);
+  $tabbedViews.appendChild($viewContainer);
 
   const $viewInfo = document.createElement('div');
   $viewInfo.setAttribute('class', 'view');
   $viewInfo.setAttribute('data-view', 'info');
-  $viewInfo.appendChild($viewContainer);
+  $viewContainer.appendChild($viewInfo);
 
   const $info = document.createElement('div');
   $info.setAttribute('class', 'info');
-  $info.appendChild($viewInfo);
+  $viewInfo.appendChild($info);
 
   const $infoP = document.createElement('p');
-  // $infoP.textContent =
-  $infoP.appendChild($info);
+  const dataInfo = pokemon.flavorTextEntries[0];
+  $infoP.textContent = `${dataInfo}`;
+  $info.appendChild($infoP);
 
   const $viewSpecialMoves = document.createElement('div');
   $viewSpecialMoves.setAttribute('class', 'view hidden');
   $viewSpecialMoves.setAttribute('data-view', 'special-moves');
-  $viewSpecialMoves.appendChild($viewContainer);
+  $viewContainer.appendChild($viewSpecialMoves);
 
   const $specialMoves = document.createElement('div');
   $specialMoves.setAttribute('class', 'special-moves');
-  $specialMoves.appendChild($viewSpecialMoves);
+  $viewSpecialMoves.appendChild($specialMoves);
 
   const $pSpecialMoves = document.createElement('p');
-  // $pWeakness.textContent =
-  $pSpecialMoves.appendChild($specialMoves);
+  for (let i = 1; i < pokeStats.abilities.length; i++) {
+    $pSpecialMoves.textContent = pokeStats.abilities[i];
+  }
+  $specialMoves.appendChild($pSpecialMoves);
 
   const $viewStats = document.createElement('div');
   $viewStats.setAttribute('class', 'view hidden');
   $viewStats.setAttribute('data-view', 'stats');
-  $viewStats.appendChild($viewContainer);
+  $viewContainer.appendChild($viewStats);
 
   const $stats = document.createElement('div');
   $stats.setAttribute('class', 'stats');
-  $stats.appendChild($viewStats);
+  $viewStats.appendChild($stats);
 
   const $pStats = document.createElement('p');
-  // $pWeakness.textContent =
-  $pStats.appendChild($stats);
+  for (let i = 1; i < pokeStats.stats.length; i++) {
+    $pStats.textContent = pokeStats.stats[i];
+  }
+  $stats.appendChild($pStats);
 
   const $tabContainer = document.createElement('div');
   $tabContainer.setAttribute('class', 'tab-container');
-  $tabContainer.appendChild($tabbedViews);
+  $tabbedViews.appendChild($tabContainer);
 
   const $infoTab = document.createElement('div');
   $infoTab.setAttribute('class', 'tab active');
   $infoTab.setAttribute('data-view', 'info');
   $infoTab.textContent = 'Info';
-  $infoTab.appendChild($tabContainer);
+  $tabContainer.appendChild($infoTab);
 
   const $specialMovesTab = document.createElement('div');
   $specialMovesTab.setAttribute('class', 'tab');
   $specialMovesTab.setAttribute('data-view', 'special-moves');
   $specialMovesTab.textContent = 'Special Moves';
-  $specialMovesTab.appendChild($tabContainer);
+  $tabContainer.appendChild($specialMovesTab);
 
   const $statsTab = document.createElement('div');
   $statsTab.setAttribute('class', 'tab');
   $statsTab.setAttribute('data-view', 'stats');
   $statsTab.textContent = 'Stats';
-  $statsTab.appendChild($tabContainer);
+  $tabContainer.appendChild($statsTab);
 
-  return $row;
+  return $columnPokemonFeature;
 }
