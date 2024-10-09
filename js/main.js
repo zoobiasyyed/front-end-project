@@ -112,8 +112,6 @@ async function fetchRegionOfPokemon(regionURL) {
 function renderPokemon(pokemon, id) {
   const $pokemonColumn = document.createElement('div');
   $pokemonColumn.setAttribute('class', 'column-half');
-  // from brett
-  $pokemonColumn.dataset.url = pokemon.url;
   $pokemonColumn.dataset.name = pokemon.name;
   $pokemonColumn.className =
     'column-half column-third column-fourth column-fifth column-sixth';
@@ -166,11 +164,11 @@ if (!$pokemonCard) throw new Error('query for $pokemonCard failed');
 $pokemonCard.addEventListener('click', async (event) => {
   const eventTarget = event.target;
   const clickedCard = eventTarget.closest('.column-half');
-  if (!clickedCard) return;
+  if (!clickedCard) throw new Error('not clickedCard');
   const datasetName = clickedCard.dataset.name;
-  if (!datasetName) return;
+  if (!datasetName) throw new Error('not datasetName');
   try {
-    const flavorText = await fetchUrl(datasetName);
+    const flavorText = await fetchPokemonSpecies(datasetName);
     const pokemonDetails = await fetchInfo(datasetName);
     if (flavorText && pokemonDetails) {
       // create an object bc we need to pass into render info
@@ -202,7 +200,7 @@ $pokemonCard.addEventListener('click', async (event) => {
   }
 });
 // making API call
-async function fetchUrl(name) {
+async function fetchPokemonSpecies(name) {
   try {
     const fetchUrl = await fetch(
       `https://pokeapi.co/api/v2/pokemon-species/${name}`,
@@ -340,9 +338,11 @@ function renderInfo(pokemon, pokeStats) {
   const $pSpecialMoves2 = document.createElement('p');
   $pSpecialMoves2.textContent = pokeStats.abilities[0].ability.name;
   $specialMoves.appendChild($pSpecialMoves2);
-  const $pSpecialMoves3 = document.createElement('p');
-  $pSpecialMoves3.textContent = pokeStats.abilities[1].ability.name;
-  $specialMoves.appendChild($pSpecialMoves3);
+  if (pokeStats.abilities.length > 1) {
+    const $pSpecialMoves3 = document.createElement('p');
+    $pSpecialMoves3.textContent = pokeStats.abilities[1].ability.name;
+    $specialMoves.appendChild($pSpecialMoves3);
+  }
   const $viewStats = document.createElement('div');
   $viewStats.setAttribute('class', 'view hidden');
   $viewStats.setAttribute('data-view', 'stats');

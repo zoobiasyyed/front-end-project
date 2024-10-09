@@ -176,8 +176,7 @@ async function fetchRegionOfPokemon(regionURL: string): Promise<void> {
 function renderPokemon(pokemon: Pokemoncard, id: string): HTMLElement {
   const $pokemonColumn = document.createElement('div');
   $pokemonColumn.setAttribute('class', 'column-half');
-  // from brett
-  $pokemonColumn.dataset.url = pokemon.url;
+
   $pokemonColumn.dataset.name = pokemon.name;
   $pokemonColumn.className =
     'column-half column-third column-fourth column-fifth column-sixth';
@@ -246,13 +245,13 @@ if (!$pokemonCard) throw new Error('query for $pokemonCard failed');
 $pokemonCard.addEventListener('click', async (event: Event) => {
   const eventTarget = event.target as HTMLElement;
   const clickedCard = eventTarget.closest('.column-half') as HTMLElement;
-  if (!clickedCard) return;
+  if (!clickedCard) throw new Error('not clickedCard');
 
   const datasetName = clickedCard.dataset.name;
-  if (!datasetName) return;
+  if (!datasetName) throw new Error('not datasetName');
 
   try {
-    const flavorText = await fetchUrl(datasetName);
+    const flavorText = await fetchPokemonSpecies(datasetName);
     const pokemonDetails = await fetchInfo(datasetName);
 
     if (flavorText && pokemonDetails) {
@@ -289,7 +288,7 @@ $pokemonCard.addEventListener('click', async (event: Event) => {
 });
 
 // making API call
-async function fetchUrl(name: string): Promise<string | undefined> {
+async function fetchPokemonSpecies(name: string): Promise<string | undefined> {
   try {
     const fetchUrl = await fetch(
       `https://pokeapi.co/api/v2/pokemon-species/${name}`,
@@ -458,9 +457,11 @@ function renderInfo(pokemon: Pokemoncard, pokeStats: PokemonInfo): HTMLElement {
   $pSpecialMoves2.textContent = pokeStats.abilities[0].ability.name;
   $specialMoves.appendChild($pSpecialMoves2);
 
-  const $pSpecialMoves3 = document.createElement('p');
-  $pSpecialMoves3.textContent = pokeStats.abilities[1].ability.name;
-  $specialMoves.appendChild($pSpecialMoves3);
+  if (pokeStats.abilities.length > 1) {
+    const $pSpecialMoves3 = document.createElement('p');
+    $pSpecialMoves3.textContent = pokeStats.abilities[1].ability.name;
+    $specialMoves.appendChild($pSpecialMoves3);
+  }
 
   const $viewStats = document.createElement('div');
   $viewStats.setAttribute('class', 'view hidden');
