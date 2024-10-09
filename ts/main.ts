@@ -237,13 +237,8 @@ $allPokemon.addEventListener('click', () => {
   swapView('main');
 });
 
-// feature for when u click on a pokemon
-// You'll add event listeners to each pokemon card, so that when you click on them it will do three things:
-// Make an API call to get information for that specific pokemon
-// Switch views
-// Render the pokemon data on the screen with a DOM function and append it!
+// FEATURE FOR WHEN YOU CLICK ON A POKEMON
 
-//
 const $pokemonCard = document.querySelector('.pokemon-image-row');
 if (!$pokemonCard) throw new Error('query for $pokemonCard failed');
 // creating an event listener
@@ -306,7 +301,6 @@ async function fetchUrl(name: string): Promise<string | undefined> {
     const urlData = await fetchUrl.json();
 
     // find english version ONLY gang
-    // for loop through urldata.flavor_entried.length
     for (let i = 0; i < urlData.flavor_text_entries.length; i++) {
       const englishOnly = urlData.flavor_text_entries[i];
       if (englishOnly.language.name === 'en') {
@@ -334,12 +328,6 @@ async function fetchInfo(name: string): Promise<PokemonInfo | undefined> {
 
     const pokeAbilities = await fetchAbilities.json();
 
-    // for (let i = 0; i < pokeAbilities.abilities.length; i++) {
-    //   const theAbilities = pokeAbilities.abilities[i].name;
-    //   if (theAbilities === 'ability') {
-    //     return theAbilities;
-    //   }
-    // }
     return pokeAbilities;
   } catch (error) {
     console.error('Error fetching Pokemon Abilities:', error);
@@ -463,6 +451,7 @@ function renderInfo(pokemon: Pokemoncard, pokeStats: PokemonInfo): HTMLElement {
 
   const $pSpecialMoves = document.createElement('p');
   $pSpecialMoves.textContent = 'Special Moves: ';
+  $pSpecialMoves.setAttribute('class', 'special-moves-header');
   $specialMoves.appendChild($pSpecialMoves);
 
   const $pSpecialMoves2 = document.createElement('p');

@@ -144,6 +144,10 @@ form {
   background-color: #ffe4f0;
 }
 
+.special-moves-header {
+  font-weight: bold;
+}
+
 [data-view='info'].tab.active {
   color: rgb(0, 0, 0);
   border-bottom-color: rgb(0, 0, 0);
