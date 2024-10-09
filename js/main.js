@@ -425,3 +425,4 @@ function swapView(view) {
     $pokemonInfoView.classList.remove('hidden');
   }
 }
+// favorites page! yay last feature
