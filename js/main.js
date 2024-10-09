@@ -310,7 +310,9 @@ function renderInfo(pokemon, pokeStats) {
   $columnPokemonFeature.appendChild($pokemonInfoContainer);
   const $pokemonName = document.createElement('p');
   $pokemonName.setAttribute('class', 'pokemon-name');
-  $pokemonName.textContent = pokemon.name;
+  const capitilizedName =
+    pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
+  $pokemonName.textContent = `${capitilizedName} #${formattedId}`;
   $pokemonInfoContainer.appendChild($pokemonName);
   const $tabbedViews = document.createElement('div');
   $tabbedViews.setAttribute('class', 'tabbed-views');
