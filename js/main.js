@@ -216,7 +216,6 @@ async function fetchUrl(name) {
       throw new Error(`Error fetching Pokémon Url: ${fetchUrl.status}`);
     }
     const urlData = await fetchUrl.json();
-    console.log(urlData);
     // find english version ONLY gang
     // for loop through urldata.flavor_entried.length
     for (let i = 0; i < urlData.flavor_text_entries.length; i++) {
@@ -241,6 +240,12 @@ async function fetchInfo(name) {
       );
     }
     const pokeAbilities = await fetchAbilities.json();
+    // for (let i = 0; i < pokeAbilities.abilities.length; i++) {
+    //   const theAbilities = pokeAbilities.abilities[i].name;
+    //   if (theAbilities === 'ability') {
+    //     return theAbilities;
+    //   }
+    // }
     return pokeAbilities;
   } catch (error) {
     console.error('Error fetching Pokemon Abilities:', error);
@@ -341,10 +346,14 @@ function renderInfo(pokemon, pokeStats) {
   $specialMoves.setAttribute('class', 'special-moves');
   $viewSpecialMoves.appendChild($specialMoves);
   const $pSpecialMoves = document.createElement('p');
-  for (let i = 1; i < pokeStats.abilities.length; i++) {
-    $pSpecialMoves.textContent = pokeStats.abilities[i];
-  }
+  $pSpecialMoves.textContent = 'Special Moves: ';
   $specialMoves.appendChild($pSpecialMoves);
+  const $pSpecialMoves2 = document.createElement('p');
+  $pSpecialMoves2.textContent = pokeStats.abilities[0].ability.name;
+  $specialMoves.appendChild($pSpecialMoves2);
+  const $pSpecialMoves3 = document.createElement('p');
+  $pSpecialMoves3.textContent = pokeStats.abilities[1].ability.name;
+  $specialMoves.appendChild($pSpecialMoves3);
   const $viewStats = document.createElement('div');
   $viewStats.setAttribute('class', 'view hidden');
   $viewStats.setAttribute('data-view', 'stats');
@@ -353,10 +362,21 @@ function renderInfo(pokemon, pokeStats) {
   $stats.setAttribute('class', 'stats');
   $viewStats.appendChild($stats);
   const $pStats = document.createElement('p');
-  for (let i = 1; i < pokeStats.stats.length; i++) {
-    $pStats.textContent = pokeStats.stats[i];
-  }
+  $pStats.textContent = 'HP:' + ' ' + pokeStats.stats[1].base_stat;
   $stats.appendChild($pStats);
+  const $pStats2 = document.createElement('p');
+  $pStats2.textContent = 'Attack:' + ' ' + pokeStats.stats[2].base_stat;
+  $stats.appendChild($pStats2);
+  const $pStats3 = document.createElement('p');
+  $pStats3.textContent = 'Defense:' + ' ' + pokeStats.stats[3].base_stat;
+  $stats.appendChild($pStats3);
+  const $pStats4 = document.createElement('p');
+  $pStats4.textContent = 'Special Attack:' + ' ' + pokeStats.stats[4].base_stat;
+  $stats.appendChild($pStats4);
+  const $pStats5 = document.createElement('p');
+  $pStats5.textContent =
+    'Special Defense:' + ' ' + pokeStats.stats[5].base_stat;
+  $stats.appendChild($pStats5);
   // Tabs for switching between views
   const $tabContainer = document.createElement('div');
   $tabContainer.setAttribute('class', 'tab-container');
@@ -403,6 +423,7 @@ function renderInfo(pokemon, pokeStats) {
   });
   return $pokemonInfoView;
 }
+// swap view function to switch between tabs
 function swapView(view) {
   const $mainView = document.querySelector('[data-view="main-form"]');
   const $pokemonInfoView = document.querySelector('[data-view="pokemon-info"]');
