@@ -308,6 +308,12 @@ async function fetchUrl(name: string): Promise<string | undefined> {
 
     // find english version ONLY gang
     // for loop through urldata.flavor_entried.length
+    for (let i = 0; i < urlData.flavor_text_entries.length; i++) {
+      const englishOnly = urlData.flavor_text_entries[i];
+      if (englishOnly.language.name === 'en') {
+        return englishOnly.flavor_text;
+      }
+    }
 
     return urlData.flavor_text_entries[0].flavor_text;
   } catch (error) {

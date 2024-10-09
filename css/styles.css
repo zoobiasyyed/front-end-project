@@ -84,6 +84,13 @@ form {
   display: none !important;
 }
 
+.background {
+  background-color: rgb(250, 236, 244);
+  height: 700px;
+  background-image: url('https://i.pinimg.com/736x/23/cb/32/23cb3264f29d97ff830679c50660c651.jpg');
+  background-size: 1280px;
+}
+
 .box-feature {
   width: 100%;
   height: 100%;
@@ -100,8 +107,9 @@ form {
 }
 
 .pokemon-name {
-  font-size: 20px;
+  font-size: 35px;
   font-weight: bold;
+  color: #000;
 }
 
 .tabbed-views {
