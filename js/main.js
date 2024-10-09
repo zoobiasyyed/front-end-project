@@ -162,12 +162,14 @@ $regionRow?.addEventListener('click', (event) => {
         if (regionUrl) {
             clearPokemon();
             fetchRegionOfPokemon(regionUrl);
+            swapView('main');
         }
     }
 });
 $allPokemon.addEventListener('click', () => {
     clearPokemon();
     fetchLegendaryPokemon();
+    swapView('main');
 });
 // feature for when u click on a pokemon
 // You'll add event listeners to each pokemon card, so that when you click on them it will do three things:
@@ -179,16 +181,44 @@ const $pokemonCard = document.querySelector('.pokemon-image-row');
 if (!$pokemonCard)
     throw new Error('query for $pokemonCard failed');
 // creating an event listener
-$pokemonCard.addEventListener('click', (event) => {
+$pokemonCard.addEventListener('click', async (event) => {
     const eventTarget = event.target;
     const clickedCard = eventTarget.closest('.column-half');
-    console.log(clickedCard.dataset.name);
+    if (!clickedCard)
+        return;
     const datasetName = clickedCard.dataset.name;
-    if (clickedCard && datasetName) {
-        const flavorText = fetchUrl(datasetName);
-        console.log('flavortxt', flavorText);
-        const pokemonDetails = fetchInfo(datasetName);
-        // renderInfo(flavorText, pokemonDetails);
+    if (!datasetName)
+        return;
+    try {
+        const flavorText = await fetchUrl(datasetName);
+        const pokemonDetails = await fetchInfo(datasetName);
+        if (flavorText && pokemonDetails) {
+            // create an object bc we need to pass into render info
+            const pokemonCardData = {
+                url: '',
+                name: datasetName,
+                flavorTextEntries: [flavorText],
+            };
+            const pokemonInfoContainer = document.querySelector('[data-view="pokemon-info"]');
+            if (pokemonInfoContainer) {
+                pokemonInfoContainer.innerHTML = '';
+                const renderedInfo = renderInfo(pokemonCardData, pokemonDetails);
+                pokemonInfoContainer.appendChild(renderedInfo);
+                // need to query the data views
+                document
+                    .querySelector('[data-view="pokemon-info"]')
+                    ?.classList.remove('hidden');
+                document
+                    .querySelector('[data-view="main-form"]')
+                    ?.classList.add('hidden');
+            }
+        }
+        else {
+            console.error('Failed to retrieve Pokémon data');
+        }
+    }
+    catch (error) {
+        console.error('Error handling Pokémon click:', error);
     }
 });
 // making API call
@@ -200,6 +230,8 @@ async function fetchUrl(name) {
         }
         const urlData = await fetchUrl.json();
         console.log(urlData);
+        // find english version ONLY gang
+        // for loop through urldata.flavor_entried.length
         return urlData.flavor_text_entries[0].flavor_text;
     }
     catch (error) {
@@ -219,18 +251,68 @@ async function fetchInfo(name) {
         console.error('Error fetching Pokemon Abilities:', error);
     }
 }
+// need this for the image path
+function formatId(id) {
+    if (id < 10) {
+        return '000' + id;
+    }
+    else if (id < 100) {
+        return '00' + id;
+    }
+    else if (id < 1000) {
+        return '0' + id;
+    }
+    else {
+        return id.toString();
+    }
+}
 // to render dom elements
 function renderInfo(pokemon, pokeStats) {
+    const $pokemonInfoView = document.createElement('div');
+    $pokemonInfoView.setAttribute('data-view', 'pokemon-info');
+    const $container = document.createElement('div');
+    $container.setAttribute('class', 'container background');
+    $pokemonInfoView.appendChild($container);
+    const $boxFeature = document.createElement('div');
+    $boxFeature.setAttribute('class', 'box-feature');
+    $container.appendChild($boxFeature);
+    // Row for heart button
+    const $heartRow = document.createElement('div');
+    $heartRow.setAttribute('class', 'row');
+    $boxFeature.appendChild($heartRow);
+    const $heartColumn = document.createElement('div');
+    $heartColumn.setAttribute('class', 'column-full');
+    $heartRow.appendChild($heartColumn);
+    const $heartButton = document.createElement('button');
+    $heartButton.setAttribute('class', 'heart');
+    $heartButton.type = 'button';
+    $heartButton.textContent = '♡';
+    $heartColumn.appendChild($heartButton);
+    // Row for Pokémon info
+    const $infoRow = document.createElement('div');
+    $infoRow.setAttribute('class', 'row');
+    $boxFeature.appendChild($infoRow);
     const $columnPokemonFeature = document.createElement('div');
     $columnPokemonFeature.setAttribute('class', 'column-pokemon-feature');
+    $infoRow.appendChild($columnPokemonFeature);
+    // Pokémon image container
     const $pokemonImageContainer = document.createElement('div');
     $pokemonImageContainer.setAttribute('class', 'pokemon-image-container');
     $columnPokemonFeature.appendChild($pokemonImageContainer);
     const $image = document.createElement('img');
-    $image.setAttribute('class', 'pokemon-image');
-    $image.setAttribute('src', `images/downloads/${pokemon.name}.png`);
+    $image.setAttribute('class', 'pokemon-image-feature');
+    let pokemonIndex = 0;
+    for (let i = 0; i < allPokemonData.length; i++) {
+        if (allPokemonData[i].name === pokemon.name) {
+            pokemonIndex = i;
+            break;
+        }
+    }
+    const formattedId = formatId(pokemonIndex + 1);
+    $image.setAttribute('src', `images/downloads/${formattedId}.png`);
     $image.setAttribute('alt', `pokemon image: ${pokemon.name}`);
     $pokemonImageContainer.appendChild($image);
+    // Pokémon information container
     const $pokemonInfoContainer = document.createElement('div');
     $pokemonInfoContainer.setAttribute('class', 'pokemon-info-container');
     $columnPokemonFeature.appendChild($pokemonInfoContainer);
@@ -244,6 +326,7 @@ function renderInfo(pokemon, pokeStats) {
     const $viewContainer = document.createElement('div');
     $viewContainer.setAttribute('class', 'view-container');
     $tabbedViews.appendChild($viewContainer);
+    // Info view
     const $viewInfo = document.createElement('div');
     $viewInfo.setAttribute('class', 'view');
     $viewInfo.setAttribute('data-view', 'info');
@@ -255,6 +338,7 @@ function renderInfo(pokemon, pokeStats) {
     const dataInfo = pokemon.flavorTextEntries[0];
     $infoP.textContent = `${dataInfo}`;
     $info.appendChild($infoP);
+    // Special Moves and Stats views
     const $viewSpecialMoves = document.createElement('div');
     $viewSpecialMoves.setAttribute('class', 'view hidden');
     $viewSpecialMoves.setAttribute('data-view', 'special-moves');
@@ -279,6 +363,7 @@ function renderInfo(pokemon, pokeStats) {
         $pStats.textContent = pokeStats.stats[i];
     }
     $stats.appendChild($pStats);
+    // Tabs for switching between views
     const $tabContainer = document.createElement('div');
     $tabContainer.setAttribute('class', 'tab-container');
     $tabbedViews.appendChild($tabContainer);
@@ -297,5 +382,44 @@ function renderInfo(pokemon, pokeStats) {
     $statsTab.setAttribute('data-view', 'stats');
     $statsTab.textContent = 'Stats';
     $tabContainer.appendChild($statsTab);
-    return $columnPokemonFeature;
+    // creating event listeners for the tabs at least
+    $infoTab.addEventListener('click', () => {
+        $infoTab.classList.add('active');
+        $specialMovesTab.classList.remove('active');
+        $statsTab.classList.remove('active');
+        $viewInfo.classList.remove('hidden');
+        $viewSpecialMoves.classList.add('hidden');
+        $viewStats.classList.add('hidden');
+    });
+    $specialMovesTab.addEventListener('click', () => {
+        $specialMovesTab.classList.add('active');
+        $infoTab.classList.remove('active');
+        $statsTab.classList.remove('active');
+        $viewSpecialMoves.classList.remove('hidden');
+        $viewInfo.classList.add('hidden');
+        $viewStats.classList.add('hidden');
+    });
+    $statsTab.addEventListener('click', () => {
+        $statsTab.classList.add('active');
+        $infoTab.classList.remove('active');
+        $specialMovesTab.classList.remove('active');
+        $viewStats.classList.remove('hidden');
+        $viewInfo.classList.add('hidden');
+        $viewSpecialMoves.classList.add('hidden');
+    });
+    return $pokemonInfoView;
+}
+function swapView(view) {
+    const $mainView = document.querySelector('[data-view="main-form"]');
+    const $pokemonInfoView = document.querySelector('[data-view="pokemon-info"]');
+    if (!$mainView || !$pokemonInfoView)
+        return;
+    if (view === 'main') {
+        $mainView.classList.remove('hidden');
+        $pokemonInfoView.classList.add('hidden');
+    }
+    else {
+        $mainView.classList.add('hidden');
+        $pokemonInfoView.classList.remove('hidden');
+    }
 }
