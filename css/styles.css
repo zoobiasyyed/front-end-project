@@ -213,8 +213,9 @@ form {
 }
 
 .favorites-background {
-  background-color: #ececec;
-  height: 900px;
+  background-color: #e8c4d6;
+  width: 100%;
+  height: 100%;
 }
 
 .no-favorite-message {
