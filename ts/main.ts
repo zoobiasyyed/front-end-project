@@ -646,6 +646,13 @@ function renderFavoritesPage(): void {
     const favoriteElement = renderFavorites(pokemon);
     $favoritesPage.appendChild(favoriteElement);
   }
+
+  if (favoritesData.favorites.length === 0) {
+    const $noFavoritesMessage = document.createElement('p');
+    $noFavoritesMessage.setAttribute('class', 'no-favorites-message');
+    $noFavoritesMessage.textContent = 'You have no favorites!';
+    $favoritesPage.appendChild($noFavoritesMessage);
+  }
 }
 
 function renderFavorites(pokemon: Pokemoncard): HTMLElement {

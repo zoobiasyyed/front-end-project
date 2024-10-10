@@ -199,6 +199,7 @@ form {
 .pokemon-image-favorites {
   width: 100%;
   background-color: white;
+  padding-bottom: 10px;
 }
 
 .pokemon-name-favs {
@@ -209,6 +210,25 @@ form {
   width: 100%;
   height: 40px;
   margin: 0%;
+}
+
+.favorites-background {
+  background-color: #ececec;
+  height: 900px;
+}
+
+.no-favorite-message {
+  width: 100%;
+}
+
+@media screen and (width >= 900px) {
+  .pokemon-image-favorites {
+    width: 60%;
+  }
+
+  .pokemon-name-favs {
+    width: 60%;
+  }
 }
 
 .styling {
