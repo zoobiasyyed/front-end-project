@@ -269,8 +269,15 @@ function renderInfo(pokemon, pokeStats) {
   const $heartButton = document.createElement('button');
   $heartButton.setAttribute('class', 'heart');
   $heartButton.type = 'button';
-  $heartButton.textContent = '♡';
+  $heartButton.textContent = '♥';
   $heartColumn.appendChild($heartButton);
+  $heartButton.addEventListener('click', () => {
+    addToFavorites({
+      url: '',
+      name: pokemon.name,
+      flavorTextEntries: pokemon.flavorTextEntries,
+    });
+  });
   // Row for Pokémon info
   const $infoRow = document.createElement('div');
   $infoRow.setAttribute('class', 'row');
@@ -416,12 +423,119 @@ function renderInfo(pokemon, pokeStats) {
 function swapView(view) {
   const $mainView = document.querySelector('[data-view="main-form"]');
   const $pokemonInfoView = document.querySelector('[data-view="pokemon-info"]');
-  if (!$mainView || !$pokemonInfoView) return;
+  const $favoritesView = document.querySelector('[data-view="favorites-page"]');
+  if (!$mainView || !$pokemonInfoView || !$favoritesView)
+    throw new Error('error');
   if (view === 'main') {
     $mainView.classList.remove('hidden');
     $pokemonInfoView.classList.add('hidden');
-  } else {
+    $favoritesView.classList.add('hidden');
+  } else if (view === 'pokemon-info') {
     $mainView.classList.add('hidden');
     $pokemonInfoView.classList.remove('hidden');
+    $favoritesView.classList.add('hidden');
+  } else if (view === 'favorites-page') {
+    $mainView.classList.add('hidden');
+    $pokemonInfoView.classList.add('hidden');
+    $favoritesView.classList.remove('hidden');
   }
+  localStorage.setItem('current-view', view);
+}
+// favorites page! yay last feature
+const $favoritesButton = document.querySelector('#favories-button');
+if (!$favoritesButton) throw new Error('Favorites button not found');
+// and also add event lister for favorites button
+$favoritesButton.addEventListener('click', () => {
+  renderFavoritesPage();
+  swapView('favorites-page');
+});
+document.addEventListener('DOMContentLoaded', () => {
+  const savedView = localStorage.getItem('current-view') || 'main';
+  swapView('main');
+  if (savedView === 'favorites-page') {
+    renderFavoritesPage();
+  }
+});
+function addToFavorites(pokemon) {
+  // check if pokemon is alr in favs
+  let isAlreadyFavorite = false;
+  for (let i = 0; i < favoritesData.favorites.length; i++) {
+    if (favoritesData.favorites[i].name === pokemon.name) {
+      isAlreadyFavorite = true;
+    }
+  }
+  if (!isAlreadyFavorite) {
+    favoritesData.favorites.push(pokemon);
+    serializeFavoritesData();
+  }
+}
+function renderFavoritesPage() {
+  const $favoritesPage = document.querySelector('[data-view="favorites-page"]');
+  if (!$favoritesPage) throw new Error('Favorites page not found!');
+  $favoritesPage.innerHTML = '';
+  const $row = document.createElement('div');
+  $row.setAttribute('class', 'row');
+  const $column = document.createElement('div');
+  $column.setAttribute('class', 'column');
+  $row.appendChild($column);
+  const $h2Header = document.createElement('h2');
+  $h2Header.setAttribute('class', 'h2-header');
+  $h2Header.textContent = 'My Favorite Pokemon!';
+  $column.appendChild($h2Header);
+  $favoritesPage.appendChild($row);
+  for (let i = 0; i < favoritesData.favorites.length; i++) {
+    const pokemon = favoritesData.favorites[i];
+    const favoriteElement = renderFavorites(pokemon);
+    $favoritesPage.appendChild(favoriteElement);
+  }
+  if (favoritesData.favorites.length === 0) {
+    const $noFavoritesMessage = document.createElement('p');
+    $noFavoritesMessage.setAttribute('class', 'no-favorites-message');
+    $noFavoritesMessage.textContent = 'You have no favorites!';
+    $favoritesPage.appendChild($noFavoritesMessage);
+  }
+}
+function renderFavorites(pokemon) {
+  const $row2 = document.createElement('div');
+  $row2.setAttribute('class', 'row');
+  $row2.setAttribute('class', 'styling');
+  const $columnFav = document.createElement('div');
+  $columnFav.setAttribute('class', 'column-fav');
+  $row2.appendChild($columnFav);
+  const $img = document.createElement('img');
+  $img.setAttribute('class', 'pokemon-image-favorites');
+  let pokemonIndex = 0;
+  for (let i = 0; i < allPokemonData.length; i++) {
+    if (allPokemonData[i].name === pokemon.name) {
+      pokemonIndex = i;
+      break;
+    }
+  }
+  const formattedId = formatId(pokemonIndex + 1);
+  $img.setAttribute('src', `images/downloads/${formattedId}.png`);
+  $img.setAttribute('alt', pokemon.name);
+  $columnFav.appendChild($img);
+  const $p = document.createElement('p');
+  $p.setAttribute('class', 'pokemon-name-favs');
+  $p.textContent = pokemon.name;
+  $columnFav.appendChild($p);
+  const $button = document.createElement('button');
+  $button.setAttribute('class', 'delete-button');
+  $button.textContent = 'Delete';
+  $columnFav.appendChild($button);
+  $button.addEventListener('click', () => {
+    removeFromFavorites(pokemon.name);
+    renderFavoritesPage();
+  });
+  return $row2;
+}
+function removeFromFavorites(name) {
+  const newFavorites = [];
+  for (let i = 0; i < favoritesData.favorites.length; i++) {
+    if (favoritesData.favorites[i].name !== name) {
+      newFavorites.push(favoritesData.favorites[i]);
+    }
+  }
+  favoritesData.favorites = newFavorites;
+  serializeFavoritesData();
 }

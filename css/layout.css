@@ -65,6 +65,14 @@ header {
   padding-left: 20px;
 }
 
+.column-fav {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin: 30px;
+  align-items: center;
+}
+
 @media screen and (width >= 585px) {
   .column-third {
     width: calc(100% / 3);

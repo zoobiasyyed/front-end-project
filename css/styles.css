@@ -102,8 +102,16 @@ form {
 
 .heart {
   background-color: transparent;
-  padding: 20px;
+  padding-right: 20px;
+  padding-top: 20px;
   border: none;
+  font-size: 40px;
+  cursor: pointer;
+}
+
+.heart:focus {
+  color: rgb(255, 0, 195);
+  cursor: pointer;
 }
 
 .pokemon-name {
@@ -188,4 +196,60 @@ form {
   padding: 1.5rem;
   display: flex;
   align-items: flex-start;
+}
+
+.container-favorites {
+  background-color: rgb(236, 236, 236);
+  height: 1000px;
+  width: 100%;
+}
+
+.pokemon-image-favorites {
+  width: 100%;
+  background-color: white;
+  padding-bottom: 10px;
+}
+
+.pokemon-name-favs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #bebebe;
+  width: 100%;
+  height: 40px;
+  margin: 0%;
+}
+
+.favorites-background {
+  background-color: #e8c4d6;
+  width: 100%;
+  height: 4000px;
+}
+
+.no-favorite-message {
+  width: 100%;
+}
+
+.styling {
+  display: flex;
+  justify-content: center;
+}
+
+.delete-button {
+  margin-top: 10px;
+  border: none;
+  background-color: transparent;
+  color: red;
+  font-size: 10px;
+  text-decoration: underline;
+}
+
+@media screen and (width >= 900px) {
+  .pokemon-image-favorites {
+    width: 60%;
+  }
+
+  .pokemon-name-favs {
+    width: 60%;
+  }
 }
