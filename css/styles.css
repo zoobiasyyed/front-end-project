@@ -211,6 +211,11 @@ form {
   margin: 0%;
 }
 
+.styling {
+  display: flex;
+  justify-content: center;
+}
+
 .delete-button {
   margin-top: 10px;
   border: none;
