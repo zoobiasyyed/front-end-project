@@ -106,6 +106,10 @@ form {
   border: none;
 }
 
+.heart:focus {
+  color: red;
+}
+
 .pokemon-name {
   font-size: 35px;
   font-weight: bold;
@@ -222,16 +226,6 @@ form {
   width: 100%;
 }
 
-@media screen and (width >= 900px) {
-  .pokemon-image-favorites {
-    width: 60%;
-  }
-
-  .pokemon-name-favs {
-    width: 60%;
-  }
-}
-
 .styling {
   display: flex;
   justify-content: center;
@@ -244,4 +238,14 @@ form {
   color: red;
   font-size: 10px;
   text-decoration: underline;
+}
+
+@media screen and (width >= 900px) {
+  .pokemon-image-favorites {
+    width: 60%;
+  }
+
+  .pokemon-name-favs {
+    width: 60%;
+  }
 }

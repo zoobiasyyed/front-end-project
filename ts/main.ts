@@ -372,7 +372,12 @@ function renderInfo(pokemon: Pokemoncard, pokeStats: PokemonInfo): HTMLElement {
   const $heartButton = document.createElement('button');
   $heartButton.setAttribute('class', 'heart');
   $heartButton.type = 'button';
-  $heartButton.textContent = '♡';
+
+  const $heartIcon = document.createElement('i');
+  $heartIcon.setAttribute('class', 'fa-solid fa-heart');
+
+  $heartButton.appendChild($heartIcon);
+
   $heartColumn.appendChild($heartButton);
 
   $heartButton.addEventListener('click', () => {
