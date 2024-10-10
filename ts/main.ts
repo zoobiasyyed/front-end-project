@@ -375,6 +375,14 @@ function renderInfo(pokemon: Pokemoncard, pokeStats: PokemonInfo): HTMLElement {
   $heartButton.textContent = '♡';
   $heartColumn.appendChild($heartButton);
 
+  $heartButton.addEventListener('click', () => {
+    addToFavorites({
+      url: '',
+      name: pokemon.name,
+      flavorTextEntries: pokemon.flavorTextEntries,
+    });
+  });
+
   // Row for Pokémon info
   const $infoRow = document.createElement('div');
   $infoRow.setAttribute('class', 'row');
@@ -583,3 +591,22 @@ if (!$favoritesButton) throw new Error('Favorites button not found');
 $favoritesButton.addEventListener('click', () => {
   swapView('favorites-page');
 });
+
+function addToFavorites(pokemon: Pokemoncard): void {
+  // check if pokemon is alr in favs
+  let isAlreadyFavorite = false;
+  for (let i = 0; i < favoritesData.favorites.length; i++) {
+    if (favoritesData.favorites[i].name === pokemon.name) {
+      isAlreadyFavorite = true;
+      break;
+    }
+  }
+
+  if (!isAlreadyFavorite) {
+    favoritesData.favorites.push(pokemon);
+    serializeFavoritesData();
+  }
+}
+
+// need to create the render function
+// and also add event lister for favorites button
