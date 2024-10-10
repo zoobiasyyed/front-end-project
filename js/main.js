@@ -438,7 +438,7 @@ function swapView(view) {
     const $pokemonInfoView = document.querySelector('[data-view="pokemon-info"]');
     const $favoritesView = document.querySelector('[data-view="favorites-page"]');
     if (!$mainView || !$pokemonInfoView || !$favoritesView)
-        return;
+        throw new Error('error');
     if (view === 'main') {
         $mainView.classList.remove('hidden');
         $pokemonInfoView.classList.add('hidden');
@@ -459,6 +459,7 @@ function swapView(view) {
 const $favoritesButton = document.querySelector('#favories-button');
 if (!$favoritesButton)
     throw new Error('Favorites button not found');
+// and also add event lister for favorites button
 $favoritesButton.addEventListener('click', () => {
     swapView('favorites-page');
 });
@@ -468,7 +469,6 @@ function addToFavorites(pokemon) {
     for (let i = 0; i < favoritesData.favorites.length; i++) {
         if (favoritesData.favorites[i].name === pokemon.name) {
             isAlreadyFavorite = true;
-            break;
         }
     }
     if (!isAlreadyFavorite) {
@@ -477,4 +477,3 @@ function addToFavorites(pokemon) {
     }
 }
 // need to create the render function
-// and also add event lister for favorites button
