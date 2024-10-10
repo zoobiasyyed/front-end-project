@@ -553,19 +553,33 @@ function renderInfo(pokemon: Pokemoncard, pokeStats: PokemonInfo): HTMLElement {
 
 // swap view function to switch between tabs
 
-function swapView(view: 'main' | 'pokemon-info'): void {
+function swapView(view: 'main' | 'pokemon-info' | 'favorites-page'): void {
   const $mainView = document.querySelector('[data-view="main-form"]');
   const $pokemonInfoView = document.querySelector('[data-view="pokemon-info"]');
+  const $favoritesView = document.querySelector('[data-view="favorites-page"]');
 
-  if (!$mainView || !$pokemonInfoView) return;
+  if (!$mainView || !$pokemonInfoView || !$favoritesView) return;
 
   if (view === 'main') {
     $mainView.classList.remove('hidden');
     $pokemonInfoView.classList.add('hidden');
-  } else {
+    $favoritesView.classList.add('hidden');
+  } else if (view === 'pokemon-info') {
     $mainView.classList.add('hidden');
     $pokemonInfoView.classList.remove('hidden');
+    $favoritesView.classList.add('hidden');
+  } else if (view === 'favorites-page') {
+    $mainView.classList.add('hidden');
+    $pokemonInfoView.classList.add('hidden');
+    $favoritesView.classList.remove('hidden');
   }
 }
 
 // favorites page! yay last feature
+
+const $favoritesButton = document.querySelector('#favories-button');
+if (!$favoritesButton) throw new Error('Favorites button not found');
+
+$favoritesButton.addEventListener('click', () => {
+  swapView('favorites-page');
+});

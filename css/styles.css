@@ -192,20 +192,13 @@ form {
 
 .container-favorites {
   background-color: rgb(192, 251, 251);
-  height: 800px;
+  height: 1000px;
+  width: 100%;
 }
 
 .pokemon-image-favorites {
   width: 100%;
   background-color: white;
-}
-
-.column-fav {
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-  padding: 20px;
-  align-items: center;
 }
 
 .pokemon-name-favs {
